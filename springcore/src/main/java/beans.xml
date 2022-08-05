@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"> <!-- bean definitions here -->
+
+	<bean id="adr" class="springcore.Address">
+		<property name="dno" value="3092" />
+		<property name="street" value="Koramangla" />
+		<property name="city" value="Bangalore" />
+
+	</bean>
+
+	<!-- <bean id="p" class="springcore.Person" scope="singleton"> <property 
+		name="name" value="Kishore" /> <property name="id" value="9999" /> <property 
+		name="address" ref="adr" /> </bean> -->
+
+	<bean id="p" class="springcore.Person" scope="prototype">
+		<constructor-arg value="Kamal" />
+		<constructor-arg value="9876" />
+		<constructor-arg ref="adr" />
+	</bean>
+
+	<bean id="qns" class="springcore.Questions">
+		<property name="question" value="What is java" />
+		<property name="answers">
+			<list>
+				<value>Java is Object Oriented Language</value>
+				<value>Java has multithreading concept</value>
+				<value>Java has exception handling</value>
+			</list>
+
+		</property>
+
+		<property name="marks">
+			<map>
+				<entry key="ssc" value="100" />
+				<entry key="inter" value="78" />
+				<entry key="degree" value="76" />
+			</map>
+
+		</property>
+
+
+	</bean>
+
+	<bean id="db" class="springcore.DbConn" init-method="init" destroy-method="destroy">
+		<property name="driver" value="type4 driver" />
+	</bean>
+
+
+
+</beans>
