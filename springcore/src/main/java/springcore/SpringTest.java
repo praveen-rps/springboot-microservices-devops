@@ -19,11 +19,11 @@ public class SpringTest {
 		//Address adr1 = (Address) context.getBean("adr");
 		//System.out.println(adr1);
 		
-		Person p1 = (Person) context.getBean("p");
-		System.out.println(p1.hashCode());
+		Person p1 = (Person) context.getBean("p1");
+		System.out.println(p1);
 		
-		Person p2 = (Person) context.getBean("p");
-		System.out.println(p2.hashCode());
+		Person p2 = (Person) context.getBean("p2");
+		System.out.println(p2);
 		
 		Questions q = (Questions) context.getBean("qns");
 		System.out.println(q);

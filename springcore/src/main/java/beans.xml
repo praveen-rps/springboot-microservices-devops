@@ -13,13 +13,22 @@
 
 	</bean>
 
-	<!-- <bean id="p" class="springcore.Person" scope="singleton"> <property 
-		name="name" value="Kishore" /> <property name="id" value="9999" /> <property 
+	<!-- <bean id="p" class="springcore.Person" scope="singleton"> 
+	<property 
+		name="name" value="Kishore" /> 
+		<property name="id" value="9999" /> 
+		<property 
 		name="address" ref="adr" /> </bean> -->
 
-	<bean id="p" class="springcore.Person" scope="prototype">
+	<bean id="p1" class="springcore.Person" scope="prototype">
 		<constructor-arg value="Kamal" />
 		<constructor-arg value="9876" />
+		<constructor-arg ref="adr" />
+	</bean>
+	
+	<bean id="p2" class="springcore.Person" scope="prototype">
+		<constructor-arg value="Hassan" />
+		<constructor-arg value="1234" />
 		<constructor-arg ref="adr" />
 	</bean>
 
