@@ -1,0 +1,148 @@
+Springboot
+-----------
+
+Spring Boot is a Spring module that provides the RAD (Rapid Application Development) 
+feature to the Spring framework.
+
+Convention over 
+
+
+Spring Boot is a project that is built on the top of the Spring Framework. 
+It provides an easier and faster way to set up, configure, and run both simple and web-based applications.
+
+Spring framework + Embedded Servers - XML configuration = springboot
+
+Why should we use Spring Boot Framework?
+
+We should use Spring Boot Framework because:
+
+    The dependency injection approach is used in Spring Boot.
+    It contains powerful database transaction management capabilities.
+    It simplifies integration with other Java frameworks like JPA/Hibernate ORM, Struts, etc.
+    It reduces the cost and development time of the application.
+
+
+The main goal of Spring Boot is to reduce development, unit test, and integration test time.
+
+    Provides Opinionated Development approach
+    Avoids defining more Annotation Configuration
+    Avoids writing lots of import statements
+    Avoids XML Configuration.
+
+
+Spring Boot Framework is widely used to develop REST APIs.  (MVC)
+
+
+1. Creating manually a maven project and add the dependencies
+   springboot-starter
+   springboot-starter-web
+   
+
+2. CLI ---> gradle language
+
+
+3. spring intializer--->best and easy way to create a springboot applications
+
+
+
+SOAP
+RESTFul 
+
+
+
+Service Agreement
+------------------
+
+1. Request and Response Format
+2. Request and Response Object Structure
+3. Http Method of communication
+4. Service End Point
+
+
+Request object 
+
+1. payload, http method, url pattern, headers
+
+Response object
+
+response data, response code
+
+
+
+100
+
+200
+
+300
+
+400
+
+500
+
+
+Data formats: xml or json
+
+
+
+HTTP ---> Hypertext transfer protocol is used or communication
+
+GET   -- @GetMapping
+POST  --- @PostMapping
+Delete -- @DeleteMapping
+PUT
+Options
+Trace
+Head
+
+
+Rest API Clients
+-----------------
+
+Postman
+
+ARC
+
+Telent
+
+
+<employees>
+	<employee>
+			<name>praveen</name>
+			<dept>finance</dept>
+			<desg>manager</des>
+	</employee>
+	<employee>
+			<name>kumar</name>
+			<dept>quality</dept>
+			<desg>lead</des>
+	</employee>
+</employees>
+	
+
+
+
+[
+{
+	"name":"praveen",
+	"dept":"finance",
+	"desg":"manager"
+},
+{
+	"name":"kumar",
+	"dept":"quality",
+	"desg":"lead"
+}
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
