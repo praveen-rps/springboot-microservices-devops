@@ -1,0 +1,269 @@
+Messaging is a technique to communicate applications or software components.
+
+
+Messaging is meant for asynchronous communication.
+
+
+
+sender--------------------------->MOM<---------------------------receiver
+
+
+MOM----------------Message Oriented Middleware (Messaging Server)
+
+
+Two types of messaging:
+
+1. Point to Point      		(1 to 1)
+2. Publish & Subscribe	(1 to many)
+
+
+Point to Point
+
+
+sender------------------->Queue---------------------->receiver
+
+s1 ----> q1 ----> r1
+
+
+s1-----> q2  ----> r2
+
+
+
+
+
+
+Publish & Subscribe
+
+			          |-------------->receiver 1
+sender------------------->Topic--------------|-------------->receiver 2
+			          |-------------->receiver 3
+
+Both queue and topic are called Messaging Destinations. 
+They are available within the Messaging Server.
+
+
+Kafka supports only publish & subscribe.
+
+Kafka supports distributed messaging. A single topic spreads across multiple nodes(kafka servers) 
+in the cluster.
+
+Each node is also called a broker. Technically each kafka broker is a jvm.
+
+jvm---java virtual machine-------------interpreter which converts bytecode into runtime instruction.
+
+
+
+
+producer ----> topic
+
+A topic is divided into smaller portions called partitions. 
+
+Each partition  holds a set of related messages.
+
+Each partition is replicated across multiple brokers based on the replication factor.
+
+
+For example assume that a topic has 4 paritions(0 to 3) with replication factor of 3.
+
+Also assume that there are 5 brokers in the cluster. 
+
+The sample distribution may be as shown below.
+
+
+broker-1---------------------------0,1
+
+broker-2---------------------------2,3,0
+
+broker-3---------------------------1,2
+
+broker-4--------------------------3,0,1
+
+broker-5-------------------------2,3
+
+ISR --->in sync replica  
+leader partition
+followers
+
+Kafka guarantees that a single partition will not be replicated in the same broker.
+
+
+
+Message is the fundamental unit of data in kafka. A message can not spread scross multiple partitions/brokers.
+A message contains 2 parts.
+
+1. key
+2. value
+
+Kafka by default, ensures that  all the messages with the same key go to the same partition.
+
+value is the payload.
+
+
+Each message is called a log.
+
+			serializer									deserializer
+sender------------------------------->Topic---------------------------------->receiver
+	    object------>byte[]	                    byte[]---------------->object	
+
+
+distributed commit log .
+
+
+distributed------------------ a single topic is distributed across multiple brokers in the cluster
+
+commit----------------------as the message is consumed by the consumer, they are committed--------- 
+the committed messages will not be consumed by the same   consumer
+
+Data Ingest----------------importing data from various data sources to a storage medium.
+
+
+Using data ingest, we can very easily build etl pipelines.
+
+	   extract				                        transform				               load	
+rdbms----------------------------->kafka topic 1---------------------->streaming app------------------->kafka topic 2-------------------->nosql
+
+
+Log aggregation-------------logs from multiple sources can be moved to a centralized repository for data analytics.
+
+website activity tracking-----------tracking user's navigation in web
+
+stream processing  ----------------processing live data
+
+event sourcing----------------------any change of state in an application can be recorded as an event.
+
+Zookeeper is a component which maintains the meta data of kafka.
+
+
+Kafka is written in java(80%) and scala(20%).
+
+
+Kafka setup and verification:
+
+step 1:
+
+Download jdk1.8 from https://www.oracle.com/in/java/technologies/javase/javase8-archive-downloads.html#license-lightbox and install it.
+
+step 2:
+
+set the JAVA_HOME environment variable. (c:\ProgramFiles\java\jdk1.8...)
+
+step 3:
+
+Download Apache kafka from https://www.apache.org/dyn/closer.cgi?path=/kafka/3.2.0/kafka_2.12-3.2.0.tgz and extract it
+
+
+kafka_2.12-2.5.0.tgz
+
+2.12--------------version of scala used to develop kafka software
+2.5.0-------------kafka version.
+
+kafka subdirectories:
+
+bin-----------------binary scripts for starting/shutting down sever and etc------------for unix/linux platform
+bin\windows---------binary scripts for windows platform
+
+config-----------config files
+
+libs---------------libraries in the format of jar files.
+
+site-docs-------contains the documentation.
+
+
+step 4: (optional)
+
+set the KAFKA_HOME environment variable(c:\kafka_2.12-2.5.0)
+
+step 5:
+
+Add %JAVA_HOME%\bin and %KAFKA_HOME%\bin\windows to path.
+
+
+step 6:
+
+start the zookeeper
+
+open a new command windows and run the following command.
+
+zookeeper-server-start c:\kafka_2.12-2.5.0\config\zookeeper.properties
+
+step 7:
+
+start the kafka server.
+
+open a new command windows and run the following command.
+
+kafka-server-start c:\kafka_2.12-2.5.0\config\server.properties
+
+step 8:
+
+create a topic called first-topic with four partitions.
+
+open a new command windows and run the following command.
+
+kafka-topics --create --topic first-topic --partitions 4 --replication-factor 1 --zookeeper localhost:2181
+
+
+step 9:
+start a kafka console consumer
+
+kafka-console-consumer --topic first-topic --bootstrap-server localhost:9092
+
+
+step 10:
+
+start a kafka console producer.
+
+open a new command windows and run the following command.
+
+
+kafka-console-producer --topic first-topic --bootstrap-server localhost:9092
+
+
+
+
+
+
+kafka api provides serializers and deserializers for most of the common classes.
+
+KafkaProducer<String,String>----------represents the producer with both key and value as String.
+
+ProducerRecord<String,String>---------represents the message where both key and value are string.
+
+Kafka guarantees that all the messages with the same key go to the same partition.
+
+
+
+Consumer Group:
+
+A consumer group guarantees that a message consumed by one consumer of the group can't be consumed by another 
+consumer of the same group.
+
+
+Default partitioning logic used by kafka:
+
+the partition to which the current message goes=hash_code of the key % no_of_partitions
+
+%------returns the reminder of the division.
+
+hashcode----------the hexadecimal integer generated for each object based on the content.
+
+
+
+key		partition
+first-key		 0
+second-key	 1
+third-key		 2
+any other key	 3
+
+
+Custom Partitioner should implement an interface called Partitioner which contains 3 methods.
+
+1. configure()-----------------initialization code-------------invoked only once---------------used for opening resources like datasource,file and etc
+2. partition()-------------------partitioning logic--------------invoked for each message
+3. close()----------------------clean up code------------------invoked only once---------------used for closing resources
+
+
+
+
+
+
